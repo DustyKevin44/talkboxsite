@@ -7,7 +7,7 @@
  */
 
 // Define database path
-$dbPath = __DIR__ . '/../../db/labb2.db';
+$dbPath = __DIR__ . '/../../db/database.db';
 
 try {
     // Create PDO connection to SQLite database

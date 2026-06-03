@@ -10,7 +10,7 @@
  * - Responsive design
  */
 
-/* ========== VARIABLES AND RESET ========== */
+/*  VARIABLES AND RESET  */
 
 * {
     margin: 0;
@@ -45,7 +45,7 @@
     --transition: all 0.3s ease;
 }
 
-/* ========== TYPOGRAPHY ========== */
+/*  TYPOGRAPHY  */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -92,7 +92,7 @@ small {
     color: var(--text-lighter);
 }
 
-/* ========== LAYOUT ========== */
+/*  LAYOUT  */
 
 html, body {
     height: 100%;
@@ -111,7 +111,7 @@ body {
     padding: 0 var(--spacing-md);
 }
 
-/* ========== HEADER AND NAVIGATION ========== */
+/*  HEADER AND NAVIGATION  */
 
 .header {
     background-color: var(--bg-white);
@@ -167,7 +167,7 @@ body {
     color: #dc2626;
 }
 
-/* ========== FOOTER ========== */
+/*  FOOTER  */
 
 .footer {
     background-color: var(--bg-white);
@@ -182,7 +182,7 @@ body {
     margin: 0;
 }
 
-/* ========== BUTTONS ========== */
+/* BUTTONS  */
 
 .btn {
     display: inline-block;
@@ -222,7 +222,7 @@ body {
     transform: translateY(0);
 }
 
-/* ========== FORMS ========== */
+/* FORMS  */
 
 .form {
     display: flex;
@@ -314,7 +314,7 @@ body {
     text-align: right;
 }
 
-/* ========== ALERTS ========== */
+/*  ALERTS*/
 
 .alert {
     padding: var(--spacing-md) var(--spacing-lg);
@@ -341,7 +341,7 @@ body {
     border-left: 4px solid var(--warning-color);
 }
 
-/* ========== AUTHENTICATION PAGES ========== */
+/* AUTHENTICATION */
 
 .auth-container {
     display: flex;
@@ -374,7 +374,7 @@ body {
     font-weight: 600;
 }
 
-/* ========== HOME/WELCOME PAGE ========== */
+/*  HOME/WELCOME PAGE  */
 
 .welcome-section {
     display: flex;
@@ -427,7 +427,7 @@ body {
     justify-content: center;
 }
 
-/* ========== POSTS PAGE ========== */
+/*  POSTS PAGE  */
 
 .posts-page {
     display: grid;
@@ -439,6 +439,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    margin-top: var(--spacing-md);
 }
 
 .search-box {
@@ -446,6 +447,7 @@ body {
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin: var(--spacing-sm) 0 var(--spacing-lg);
 }
 
 .search-input {
@@ -487,12 +489,15 @@ body {
 
 .posts-list {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: var(--spacing-lg);
+    align-items: stretch;
 }
 
 .post-card {
     background-color: var(--bg-white);
+    flex: 1 1 280px;
+    max-width: 100%;
     border-radius: var(--border-radius);
     padding: var(--spacing-lg);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
@@ -511,8 +516,36 @@ body {
 .post-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
+    gap: var(--spacing-md);
     margin-bottom: var(--spacing-md);
+}
+
+.post-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.post-delete-btn {
+    display: none;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--error-color);
+    color: #fff;
+    padding: 0.35rem 0.6rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.post-card.own-post:hover .post-delete-btn,
+.post-card.own-post:focus-within .post-delete-btn {
+    display: inline-flex;
+}
+
+.post-delete-btn:hover {
+    background-color: #dc2626;
 }
 
 .post-author {
@@ -557,7 +590,7 @@ body {
     color: var(--text-lighter);
 }
 
-/* ========== PROFILE PAGE ========== */
+/*  PROFILE PAGE  */
 
 .profile-section {
     display: flex;
@@ -627,7 +660,6 @@ body {
     margin-bottom: var(--spacing-lg);
 }
 
-/* ========== RESPONSIVE DESIGN ========== */
 
 @media (max-width: 768px) {
     .header-container {

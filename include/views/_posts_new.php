@@ -4,7 +4,7 @@
  * 
  * Displays the form for creating a new post with message and optional image.
  * Uses AJAX for submission to prevent page reload.
- * Included in posts.php
+ * Included in _posts.php
  */
 ?>
 
@@ -43,7 +43,7 @@
                     <label for="image" class="file-input-label">Choose Image</label>
                     <span id="fileName" class="file-name"></span>
                 </div>
-                <small>JPEG or PNG only, max 2MB</small>
+                <small>JPEG or PNG only, max 64MB</small>
                 <span class="form-error" id="imageError"></span>
             </div>
             

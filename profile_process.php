@@ -6,7 +6,7 @@
  * Validates input server-side and redirects back to profile.php with success/error message.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Require login and POST request
 requireLogin();

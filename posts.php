@@ -2,20 +2,17 @@
 /**
  * Posts/Comments page
  * 
- * Main application page where logged-in users can view all posts,
- * create new posts, and search posts. Requires authentication.
+ * Main page where users can view all posts and search them.
+ * Logged-in users can also create new posts.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
-
-// Require login
-requireLogin();
+require_once 'include/bootstrap.php';
 
 // Get all posts with user information
 $posts = getAllPosts($pdo);
 
 $pageTitle = 'Posts - TalkBox';
-include __DIR__ . '/include/views/header.php';
-include __DIR__ . '/include/views/posts.php';
-include __DIR__ . '/include/views/footer.php';
+include 'include/views/_header.php';
+include 'include/views/_posts.php';
+include 'include/views/_footer.php';
 ?>

@@ -26,6 +26,7 @@
                     <a href="profile.php" class="nav-link">Profile</a>
                     <a href="logout_process.php" class="nav-link nav-link-logout">Logout</a>
                 <?php else: ?>
+                    <a href="posts.php" class="nav-link">Posts</a>
                     <a href="login.php" class="nav-link">Login</a>
                     <a href="register.php" class="nav-link">Register</a>
                 <?php endif; ?>

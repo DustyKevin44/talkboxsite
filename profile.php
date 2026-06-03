@@ -6,7 +6,7 @@
  * username and password. Requires authentication.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Require login
 requireLogin();
@@ -23,7 +23,7 @@ $error = isset($_GET['error']) ? $_GET['error'] : '';
 $success = isset($_GET['success']) ? $_GET['success'] : '';
 
 $pageTitle = 'Profile - TalkBox';
-include __DIR__ . '/include/views/header.php';
+include 'include/views/_header.php';
 ?>
 
 <section class="profile-section">
@@ -141,4 +141,4 @@ include __DIR__ . '/include/views/header.php';
     </div>
 </section>
 
-<?php include __DIR__ . '/include/views/footer.php'; ?>
+<?php include 'include/views/_footer.php'; ?>

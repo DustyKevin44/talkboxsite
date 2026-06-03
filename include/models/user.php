@@ -155,7 +155,7 @@ function updatePassword($pdo, $userId, $currentPassword, $newPassword) {
         return ['success' => false, 'message' => 'User not found'];
     }
     
-    // Get the full user record including password hash
+    // Get the user password hash
     $stmt = $pdo->prepare("SELECT password FROM users WHERE id = ?");
     $stmt->execute([$userId]);
     $userRecord = $stmt->fetch(PDO::FETCH_ASSOC);

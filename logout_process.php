@@ -5,7 +5,7 @@
  * Destroys the user session and redirects to home page.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Destroy session
 session_destroy();

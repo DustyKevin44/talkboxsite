@@ -6,7 +6,7 @@
  * Otherwise displays welcome message and links to login/register.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Redirect logged-in users to posts page
 if (isLoggedIn()) {
@@ -15,7 +15,7 @@ if (isLoggedIn()) {
 }
 
 $pageTitle = 'Welcome to TalkBox';
-include __DIR__ . '/include/views/header.php';
+include 'include/views/_header.php';
 ?>
 
 <section class="welcome-section">
@@ -43,4 +43,4 @@ include __DIR__ . '/include/views/header.php';
     </div>
 </section>
 
-<?php include __DIR__ . '/include/views/footer.php'; ?>
+<?php include 'include/views/_footer.php'; ?>

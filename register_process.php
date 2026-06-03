@@ -6,7 +6,7 @@
  * and redirects to login page on success or back to register with error on failure.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Redirect if already logged in
 if (isLoggedIn()) {

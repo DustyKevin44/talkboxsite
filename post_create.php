@@ -7,7 +7,7 @@
  * Only accepts POST requests from logged-in users.
  */
 
-require_once __DIR__ . '/include/bootstrap.php';
+require_once 'include/bootstrap.php';
 
 // Set JSON response header
 header('Content-Type: application/json');
@@ -48,16 +48,20 @@ $imagePath = null;
 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     $file = $_FILES['image'];
     
-    // Validate file type
-    $mimeType = mime_content_type($file['tmp_name']);
-    if (!in_array($mimeType, ['image/jpeg', 'image/png'])) {
+    // Validate file type using the upload metadata and extension
+    $mimeType = strtolower($file['type'] ?? '');
+    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $allowedMime = ['image/jpeg', 'image/png', 'image/jpg'];
+    $allowedExt = ['jpg', 'jpeg', 'png'];
+
+    if (!in_array($mimeType, $allowedMime, true) && !in_array($ext, $allowedExt, true)) {
         echo json_encode(['success' => false, 'error' => 'Only JPEG and PNG images are allowed']);
         exit;
     }
     
-    // Validate file size (2MB max)
-    if ($file['size'] > 2 * 1024 * 1024) {
-        echo json_encode(['success' => false, 'error' => 'Image must be smaller than 2MB']);
+    // Validate file size (64MB max)
+    if ($file['size'] > 64 * 1024 * 1024) {
+        echo json_encode(['success' => false, 'error' => 'Image must be smaller than 64MB']);
         exit;
     }
     

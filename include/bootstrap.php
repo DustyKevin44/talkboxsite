@@ -15,11 +15,11 @@ ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 // Include database connection
-require_once __DIR__ . '/models/db.php';
+require_once 'models/db.php';
 
 // Include model classes
-require_once __DIR__ . '/models/user.php';
-require_once __DIR__ . '/models/post.php';
+require_once 'models/user.php';
+require_once 'models/post.php';
 
 /**
  * Check if user is logged in

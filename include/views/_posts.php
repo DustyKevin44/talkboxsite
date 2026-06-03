@@ -22,12 +22,13 @@
         
         <div class="posts-main">
             <?php
-            // Include new post form
-            $pageTitle = 'Posts';
-            include __DIR__ . '/posts_new.php';
-            
+            // Show the create-post form only for logged-in users
+            if (isLoggedIn()) {
+                include '_posts_new.php';
+            }
+
             // Include posts list
-            include __DIR__ . '/posts_list.php';
+            include '_posts_list.php';
             ?>
         </div>
     </div>

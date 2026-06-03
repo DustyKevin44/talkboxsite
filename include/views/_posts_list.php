@@ -14,12 +14,17 @@
         </div>
     <?php else: ?>
         <?php foreach ($posts as $post): ?>
-            <article class="post-card">
+            <article class="post-card<?php echo isLoggedIn() && (int)$post['user_id'] === getCurrentUserId() ? ' own-post' : ''; ?>" data-post-id="<?php echo (int)$post['id']; ?>">
                 <div class="post-header">
                     <h3 class="post-author"><?php echo escapeHtml($post['username']); ?></h3>
-                    <time class="post-time" title="<?php echo escapeHtml($post['created_at']); ?>">
-                        <?php echo formatTimeAgo($post['created_at']); ?>
-                    </time>
+                    <div class="post-header-actions">
+                        <time class="post-time" title="<?php echo escapeHtml($post['created_at']); ?>">
+                            <?php echo formatTimeAgo($post['created_at']); ?>
+                        </time>
+                        <?php if (isLoggedIn() && (int)$post['user_id'] === getCurrentUserId()): ?>
+                            <button type="button" class="post-delete-btn" data-delete-post="<?php echo (int)$post['id']; ?>" aria-label="Delete post">Delete</button>
+                        <?php endif; ?>
+                    </div>
                 </div>
                 
                 <div class="post-content">

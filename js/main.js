@@ -183,7 +183,7 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ========== LOGIN FORM VALIDATION ==========
+//  LOGIN FORM VALIDATION 
 
 document.addEventListener('DOMContentLoaded', function() {
     // Login form validation
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== REGISTER FORM VALIDATION ==========
+    //  REGISTER FORM VALIDATION 
     
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== PROFILE FORM VALIDATION ==========
+    //  PROFILE FORM VALIDATION 
     
     const changeUsernameForm = document.getElementById('changeUsernameForm');
     if (changeUsernameForm) {
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== CHARACTER COUNTER ==========
+    //  CHARACTER COUNTER 
     
     const messageTextarea = document.getElementById('message');
     if (messageTextarea) {
@@ -391,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== FILE INPUT DISPLAY NAME ==========
+    //  FILE INPUT DISPLAY NAME 
     
     const fileInput = document.getElementById('image');
     if (fileInput) {
@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== NEW POST FORM AJAX SUBMISSION ==========
+    //  NEW POST FORM AJAX SUBMISSION 
     
     const newPostForm = document.getElementById('newPostForm');
     if (newPostForm) {
@@ -419,6 +419,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageInput = document.getElementById('message');
             const imageInput = document.getElementById('image');
             const postMessage = document.getElementById('postMessage');
+            const charCount = document.getElementById('charCount');
+            const fileName = document.getElementById('fileName');
             
             // Validate message
             clearError('messageError');
@@ -443,9 +445,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     isValid = false;
                 }
                 
-                // Check file size (2MB max)
-                if (file.size > 2 * 1024 * 1024) {
-                    showError('imageError', 'Image must be smaller than 2MB');
+                // Check file size (64MB max)
+                if (file.size > 64 * 1024 * 1024) {
+                    showError('imageError', 'Image must be smaller than 64MB');
                     isValid = false;
                 }
             }
@@ -473,25 +475,35 @@ document.addEventListener('DOMContentLoaded', function() {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Reset form
-                    newPostForm.reset();
-                    if (charCount) charCount.textContent = '0';
-                    if (fileName) fileName.textContent = '';
-                    
-                    // Insert new post into DOM
-                    insertNewPost(data.post);
-                    
-                    // Show success message
+            .then(async response => {
+                const text = await response.text();
+                try {
+                    return { ok: response.ok, data: text ? JSON.parse(text) : null };
+                } catch (e) {
+                    return { ok: false, data: null, raw: text };
+                }
+            })
+            .then(result => {
+                if (!result.ok || !result.data || !result.data.success) {
+                    const message = result.data && result.data.error ? result.data.error : 'An error occurred while posting';
                     if (postMessage) {
-                        showSuccessAlert('Post created successfully!', postMessage);
+                        showErrorAlert(message, postMessage);
                     }
-                } else {
-                    if (postMessage) {
-                        showErrorAlert(data.error || 'Failed to create post', postMessage);
-                    }
+                    return;
+                }
+
+                const data = result.data;
+                // Reset form
+                newPostForm.reset();
+                if (charCount) charCount.textContent = '0';
+                if (fileName) fileName.textContent = '';
+
+                // Insert new post into DOM
+                insertNewPost(data.post);
+
+                // Show success message
+                if (postMessage) {
+                    showSuccessAlert('Post created successfully!', postMessage);
                 }
             })
             .catch(error => {
@@ -508,7 +520,60 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ========== POST SEARCH/FILTER ==========
+    //  DELETE OWN POST 
+
+    document.querySelectorAll('[data-delete-post]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const postId = this.getAttribute('data-delete-post');
+            if (!postId || !confirm('Delete this post?')) {
+                return;
+            }
+
+            const postCard = this.closest('.post-card');
+            const postMessage = document.getElementById('postMessage');
+
+            fetch('post_delete.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: 'post_id=' + encodeURIComponent(postId)
+            })
+            .then(async response => {
+                const text = await response.text();
+                try {
+                    return { ok: response.ok, data: text ? JSON.parse(text) : null };
+                } catch (e) {
+                    return { ok: false, data: null, raw: text };
+                }
+            })
+            .then(result => {
+                if (!result.ok || !result.data || !result.data.success) {
+                    const message = result.data && result.data.error ? result.data.error : 'An error occurred while deleting the post';
+                    if (postMessage) {
+                        showErrorAlert(message, postMessage);
+                    }
+                    return;
+                }
+
+                if (postCard) {
+                    postCard.remove();
+                }
+                if (postMessage) {
+                    showSuccessAlert('Post deleted successfully!', postMessage);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                if (postMessage) {
+                    showErrorAlert('An error occurred while deleting the post', postMessage);
+                }
+            });
+        });
+    });
+
+    //  POST SEARCH/FILTER 
     
     const searchInput = document.getElementById('searchInput');
     if (searchInput) {
